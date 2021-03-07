@@ -95,7 +95,10 @@ Una vez escrito nuestro modelo, lo podemos compilar utilizando la librería de
 `cmdstanr`, que es la interface con `Stan` desde `R`.
 
 ```{r, message = TRUE}
-modelos_files <- "caso-escuelas_files/"
+#set_cmdstan_path(path = "/Users/yalidt/.cmdstanr/cmdstan-2.26.1")  #indica donde se instaló stan
+cmdstanr::set_cmdstan_path(path = "~/.cmdstan/")
+modelos_files <- "/"
+
 ruta <- file.path("modelos/modelo-escuelas.stan")
 
 modelo <- cmdstan_model(ruta, dir = modelos_files)
@@ -114,14 +117,12 @@ data_list
 Contra todas las recomendaciones usuales, corramos sólo una cadena corta. 
 
 ```{r, message = TRUE}
-
 muestras <- modelo$sample(data = data_list, 
                           chains = 1, 
                           iter=700, 
                           iter_warmup=500, 
                           seed=483892929, 
                           refresh=1200)
-
 ```
 
 El muestreador en automático nos regresa ciertas alertas las cuales podemos
